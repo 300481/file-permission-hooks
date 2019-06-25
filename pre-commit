@@ -13,8 +13,7 @@ PERMISSIONS=${SELF_DIR}/.permissions
 echo -n "Backing-up file permissions..."
 
 IFS_OLD=$IFS; IFS=$'\n'
-for FILE in $(git ls-files)
-do
+for FILE in $(git ls-tree HEAD -dr --name-only; git ls-files) ; do
    # Save the permissions of all the files in the index
    echo "${FILE};$(stat -c %a ${FILE})" >> ${PERMISSIONS}
 done
